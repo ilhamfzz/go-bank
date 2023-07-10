@@ -3,6 +3,7 @@ package api
 import (
 	"context"
 	"go-bank/domain"
+	"go-bank/dto"
 	"go-bank/internal/util"
 	"time"
 
@@ -25,7 +26,7 @@ func (api *NotificationApi) GetUserNotification(ctx *fiber.Ctx) error {
 	c, cancel := context.WithTimeout(ctx.Context(), 15*time.Second)
 	defer cancel()
 
-	user := ctx.Locals("x-user").(*domain.User)
+	user := ctx.Locals("x-user").(dto.UserData)
 
 	notifications, err := api.notificationService.FindByUserID(c, user.ID)
 	if err != nil {

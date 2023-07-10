@@ -37,18 +37,18 @@ func (a *AccountRepository) FindByAccountNumber(ctx context.Context, accountNumb
 	return
 }
 
-func (a *AccountRepository) UpdateAccountBalance(ctx context.Context, id int64, balance float64) error {
+func (a *AccountRepository) UpdateAccountBalance(ctx context.Context, account *domain.Account) error {
 	dataset := a.db.Update("accounts").Where(goqu.Ex{
-		"id": id,
+		"id": account.ID,
 	}).Set(goqu.Record{
-		"balance": balance,
+		"balance": account.Balance,
 	}).Executor()
 
 	_, err := dataset.ExecContext(ctx)
 	return err
 }
 
-func (a *AccountRepository) Insert(ctx context.Context, account domain.Account) (err error) {
+func (a *AccountRepository) Insert(ctx context.Context, account *domain.Account) (err error) {
 	dataset := a.db.Insert("accounts").Rows(
 		goqu.Record{
 			"user_id":        account.UserId,

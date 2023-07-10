@@ -8,6 +8,7 @@ import (
 	"go-bank/internal/middleware"
 	"go-bank/internal/repository"
 	"go-bank/internal/service"
+
 	"go-bank/internal/sse"
 
 	"github.com/gofiber/fiber/v2"
@@ -20,7 +21,7 @@ func main() {
 	cacheConnection := repository.NewRedisClient(cnf)
 
 	hub := &dto.Hub{
-		NotificationChannel: make(map[int64]chan dto.NotificationData),
+		NotificationChannel: map[int64]chan dto.NotificationData{},
 	}
 
 	userRepository := repository.NewUser(dbConnection)

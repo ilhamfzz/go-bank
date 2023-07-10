@@ -27,12 +27,8 @@ func (t *transactionRepository) Insert(ctx context.Context, transaction *domain.
 		"amount":           transaction.Amount,
 		"transaction_type": transaction.TransactionType,
 		"transaction_date": transaction.TransactionDate,
-	}).Executor()
+	}).Returning("id").Executor()
 
-	_, err := dataset.ExecContext(ctx)
-	if err != nil {
-		return err
-	}
-
-	return nil
+	_, err := dataset.ScanStructContext(ctx, transaction)
+	return err
 }

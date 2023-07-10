@@ -27,21 +27,21 @@ func (n *notificationRepository) FindByUserID(ctx context.Context, userID int64)
 	return
 }
 
-func (n *notificationRepository) Insert(ctx context.Context, notification *domain.Notification) (err error) {
+func (n *notificationRepository) Insert(ctx context.Context, notification *domain.Notification) error {
 	dataset := n.db.Insert("notifications").Rows(goqu.Record{
 		"user_id":    notification.UserID,
+		"status":     notification.Status,
 		"title":      notification.Title,
 		"body":       notification.Body,
-		"status":     notification.Status,
 		"is_read":    notification.IsRead,
 		"created_at": notification.CreatedAt,
 	}).Returning("id").Executor()
 
-	_, err = dataset.ScanStructContext(ctx, notification)
-	return
+	_, err := dataset.ScanStructContext(ctx, notification)
+	return err
 }
 
-func (n *notificationRepository) Update(ctx context.Context, notification *domain.Notification) (err error) {
+func (n *notificationRepository) Update(ctx context.Context, notification *domain.Notification) error {
 	dataset := n.db.Update("notifications").Where(goqu.Ex{
 		"id": notification.ID,
 	}).Set(goqu.Record{
@@ -51,6 +51,6 @@ func (n *notificationRepository) Update(ctx context.Context, notification *domai
 		"is_read": notification.IsRead,
 	}).Executor()
 
-	_, err = dataset.ExecContext(ctx)
-	return
+	_, err := dataset.ExecContext(ctx)
+	return err
 }

@@ -35,7 +35,7 @@ func (n notificationService) FindByUserID(ctx context.Context, userID int64) ([]
 	}
 
 	if notificationData == nil {
-		notificationData = []dto.NotificationData{}
+		notificationData = make([]dto.NotificationData, 0)
 	}
 
 	return notificationData, nil

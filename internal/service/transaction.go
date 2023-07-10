@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	// "log"
 	"time"
 
 	"go-bank/domain"
@@ -22,10 +24,11 @@ type TransactionService struct {
 func NewTransaction(accountRepo domain.AccountRepository, transactionRepo domain.TransactionRepository,
 	cacheRepo domain.CacheRepository, notificationRepo domain.NotificationRepository, hub *dto.Hub) domain.TransactionService {
 	return &TransactionService{
-		accountRepo:     accountRepo,
-		transactionRepo: transactionRepo,
-		cacheRepo:       cacheRepo,
-		hub:             hub,
+		accountRepo:      accountRepo,
+		transactionRepo:  transactionRepo,
+		cacheRepo:        cacheRepo,
+		notificationRepo: notificationRepo,
+		hub:              hub,
 	}
 }
 
@@ -123,17 +126,18 @@ func (t TransactionService) TransferExecute(ctx context.Context, req dto.Transfe
 	}
 
 	myAccount.Balance = myAccount.Balance - reqInquiry.Amount
-	err = t.accountRepo.UpdateAccountBalance(ctx, myAccount.ID, myAccount.Balance)
+	err = t.accountRepo.UpdateAccountBalance(ctx, &myAccount)
 	if err != nil {
 		return err
 	}
 
 	dofAccount.Balance = dofAccount.Balance + reqInquiry.Amount
-	err = t.accountRepo.UpdateAccountBalance(ctx, dofAccount.ID, dofAccount.Balance)
+	err = t.accountRepo.UpdateAccountBalance(ctx, &dofAccount)
 	if err != nil {
 		return err
 	}
 
+	// log.Printf("Transfer from %s to %s with amount %f success", myAccount.AccountNumber, dofAccount.AccountNumber, reqInquiry.Amount)
 	go t.NotificationAfterTransfer(myAccount, dofAccount, reqInquiry.Amount)
 	return nil
 }
@@ -142,7 +146,7 @@ func (t TransactionService) NotificationAfterTransfer(sofAccount domain.Account,
 	notificationSender := domain.Notification{
 		UserID:    sofAccount.UserId,
 		Title:     "Transfer Berhasil",
-		Body:      fmt.Sprintf("Transfer senilai %.2f ke %s berhasil", amount, dofAccount.AccountNumber),
+		Body:      fmt.Sprintf("Anda telah melakukan transfer senilai %.2f ke %s", amount, dofAccount.AccountNumber),
 		IsRead:    0,
 		Status:    1,
 		CreatedAt: time.Now(),
@@ -157,7 +161,11 @@ func (t TransactionService) NotificationAfterTransfer(sofAccount domain.Account,
 		CreatedAt: time.Now(),
 	}
 
+	// log.Println("Notification Sender: ", notificationSender)
 	_ = t.notificationRepo.Insert(context.Background(), &notificationSender)
+	// if err != nil {
+	// 	log.Println(err)
+	// }
 	if channel, ok := t.hub.NotificationChannel[sofAccount.UserId]; ok {
 		channel <- dto.NotificationData{
 			ID:        notificationSender.ID,
@@ -168,7 +176,11 @@ func (t TransactionService) NotificationAfterTransfer(sofAccount domain.Account,
 			CreatedAt: notificationSender.CreatedAt,
 		}
 	}
+	// log.Println("Notification Receiver: ", notificationReceiver)
 	_ = t.notificationRepo.Insert(context.Background(), &notificationReceiver)
+	// if err != nil {
+	// 	log.Println(err)
+	// }
 	if channel, ok := t.hub.NotificationChannel[dofAccount.UserId]; ok {
 		channel <- dto.NotificationData{
 			ID:        notificationReceiver.ID,

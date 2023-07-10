@@ -67,7 +67,7 @@ func DatabaseConnection(cnf *config.Config) *sql.DB {
 		status integer NOT NULL,
 		title VARCHAR(255) NOT NULL,
 		body VARCHAR(255) NOT NULL,
-		is_read integer NOT NULL,
+		is_read integer default 0,
 		created_at TIMESTAMP default NULL);
 		`)
 	if err != nil {
