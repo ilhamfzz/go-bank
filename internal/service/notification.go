@@ -2,8 +2,9 @@ package service
 
 import (
 	"context"
-	"go-bank/domain"
-	"go-bank/dto"
+
+	"go-wallet.in/domain"
+	"go-wallet.in/dto"
 )
 
 type notificationService struct {

@@ -1,9 +1,9 @@
 package api
 
 import (
-	"go-bank/domain"
-	"go-bank/dto"
-	"go-bank/internal/util"
+	"go-wallet.in/domain"
+	"go-wallet.in/dto"
+	"go-wallet.in/internal/util"
 
 	"github.com/gofiber/fiber/v2"
 )

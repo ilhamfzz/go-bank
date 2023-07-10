@@ -3,8 +3,8 @@ package middleware
 import (
 	"strings"
 
-	"go-bank/domain"
-	"go-bank/internal/util"
+	"go-wallet.in/domain"
+	"go-wallet.in/internal/util"
 
 	"github.com/gofiber/fiber/v2"
 )

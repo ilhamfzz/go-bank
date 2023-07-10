@@ -2,8 +2,9 @@ package domain
 
 import (
 	"context"
-	"go-bank/dto"
 	"time"
+
+	"go-wallet.in/dto"
 )
 
 type Notification struct {

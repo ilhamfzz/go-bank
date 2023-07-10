@@ -3,7 +3,7 @@ package util
 import (
 	"errors"
 
-	"go-bank/domain"
+	"go-wallet.in/domain"
 )
 
 const (

@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"go-bank/dto"
+	"go-wallet.in/dto"
 )
 
 type Transaction struct {

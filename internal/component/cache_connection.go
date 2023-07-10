@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	"go-bank/domain"
+	"go-wallet.in/domain"
 
 	"github.com/allegro/bigcache/v3"
 )

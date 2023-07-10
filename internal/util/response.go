@@ -1,7 +1,7 @@
 package util
 
 import (
-	"go-bank/dto"
+	"go-wallet.in/dto"
 )
 
 func BuildResponse(message string, data any) dto.Response {

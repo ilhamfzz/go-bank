@@ -1,15 +1,15 @@
 package main
 
 import (
-	"go-bank/dto"
-	"go-bank/internal/api"
-	"go-bank/internal/component"
-	"go-bank/internal/config"
-	"go-bank/internal/middleware"
-	"go-bank/internal/repository"
-	"go-bank/internal/service"
+	"go-wallet.in/dto"
+	"go-wallet.in/internal/api"
+	"go-wallet.in/internal/component"
+	"go-wallet.in/internal/config"
+	"go-wallet.in/internal/middleware"
+	"go-wallet.in/internal/repository"
+	"go-wallet.in/internal/service"
 
-	"go-bank/internal/sse"
+	"go-wallet.in/internal/sse"
 
 	"github.com/gofiber/fiber/v2"
 )

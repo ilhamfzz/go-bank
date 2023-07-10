@@ -1,4 +1,4 @@
-module go-bank
+module go-wallet.in
 
 go 1.19
 

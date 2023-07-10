@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	"go-bank/internal/config"
+	"go-wallet.in/internal/config"
 
 	_ "github.com/lib/pq"
 )

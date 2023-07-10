@@ -6,9 +6,9 @@ import (
 	"log"
 	"time"
 
-	"go-bank/domain"
-	"go-bank/dto"
-	"go-bank/internal/util"
+	"go-wallet.in/domain"
+	"go-wallet.in/dto"
+	"go-wallet.in/internal/util"
 
 	"golang.org/x/crypto/bcrypt"
 )

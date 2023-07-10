@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"time"
 
-	dto "go-bank/dto"
+	dto "go-wallet.in/dto"
 )
 
 type User struct {

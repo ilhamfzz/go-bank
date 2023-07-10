@@ -3,7 +3,8 @@ package repository
 import (
 	"context"
 	"database/sql"
-	"go-bank/domain"
+
+	"go-wallet.in/domain"
 
 	"github.com/doug-martin/goqu/v9"
 )

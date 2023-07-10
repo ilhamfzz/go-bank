@@ -2,10 +2,11 @@ package api
 
 import (
 	"context"
-	"go-bank/domain"
-	"go-bank/dto"
-	"go-bank/internal/util"
 	"time"
+
+	"go-wallet.in/domain"
+	"go-wallet.in/dto"
+	"go-wallet.in/internal/util"
 
 	"github.com/gofiber/fiber/v2"
 )

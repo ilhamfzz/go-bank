@@ -3,8 +3,8 @@ package service
 import (
 	"net/smtp"
 
-	"go-bank/domain"
-	"go-bank/internal/config"
+	"go-wallet.in/domain"
+	"go-wallet.in/internal/config"
 )
 
 type emailService struct {
