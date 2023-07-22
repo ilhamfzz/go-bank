@@ -86,13 +86,6 @@ func (u userService) Register(ctx context.Context, req dto.RegisterReq) (dto.Reg
 		return dto.RegisterRes{}, domain.ErrInternalServerError
 	}
 
-	// //Assign OTP Expired Time to Cache
-	// expiredAt := time.Now().Add(5 * time.Minute).Format(time.RFC3339)
-	// err = u.cacheRepo.Set("otp:"+RefrenceID+":expire", []byte(expiredAt))
-	// if err != nil {
-	// 	return dto.RegisterRes{}, domain.ErrInternalServerError
-	// }
-
 	return dto.RegisterRes{
 		ID:         id,
 		FullName:   user.FullName,
@@ -154,20 +147,6 @@ func (u userService) ValidateOTP(ctx context.Context, req dto.ValidateOTPReq) er
 		return domain.ErrOTPInvalid
 	}
 
-	// expiredAt, err := u.cacheRepo.Get("otp:" + req.RefrenceID + ":expire")
-	// if err != nil {
-	// 	return domain.ErrInternalServerError
-	// }
-
-	// expiredAtTime, err := time.Parse(time.RFC3339, string(expiredAt))
-	// if err != nil {
-	// 	return domain.ErrInternalServerError
-	// }
-
-	// if time.Now().After(expiredAtTime) {
-	// 	return domain.ErrOTPExpired
-	// }
-
 	val, err := u.cacheRepo.Get("user-ref:" + req.RefrenceID)
 	if err != nil {
 		return domain.ErrInternalServerError
@@ -182,7 +161,6 @@ func (u userService) ValidateOTP(ctx context.Context, req dto.ValidateOTPReq) er
 	user.EmailVerifiedAt = time.Now()
 	err = u.userRepo.Update(ctx, &user)
 	if err != nil {
-		log.Println("error when update user: ", err.Error())
 		return domain.ErrInternalServerError
 	}
 

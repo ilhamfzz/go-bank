@@ -13,4 +13,5 @@ var (
 	ErrAccountNotFound      = errors.New("account not found")
 	ErrInquiryNotFound      = errors.New("inquiry not found")
 	ErrInsufficientBalance  = errors.New("insufficient balance")
+	ErrTopupNotFound        = errors.New("topup request not found")
 )

@@ -12,7 +12,7 @@ type authApi struct {
 	userService domain.UserService
 }
 
-func NewAuth(app *fiber.App, userService domain.UserService, authMiddleware fiber.Handler) {
+func NewAuth(app *fiber.App, userService domain.UserService, authMid fiber.Handler) {
 	api := authApi{
 		userService: userService,
 	}
@@ -20,7 +20,7 @@ func NewAuth(app *fiber.App, userService domain.UserService, authMiddleware fibe
 	app.Post("user/register", api.Register)
 	app.Post("user/validate-otp", api.ValidateOTP)
 	app.Post("token/generate", api.GenerateToken)
-	app.Get("token/validate", authMiddleware, api.ValidateToken)
+	app.Get("token/validate", authMid, api.ValidateToken)
 }
 
 func (a authApi) Register(ctx *fiber.Ctx) error {
